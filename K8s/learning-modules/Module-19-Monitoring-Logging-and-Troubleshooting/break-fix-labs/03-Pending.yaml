@@ -1,7 +1,0 @@
-apiVersion: v1
-kind: Pod
-metadata: {name: impossible-schedule, namespace: student-app}
-spec:
-  nodeSelector: {training-node: does-not-exist}
-  containers:
-    - {name: app, image: "nginx:1.27"}

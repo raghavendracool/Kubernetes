@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: scheduled-demo
+spec:
+  nodeSelector:
+    workload: apps
+  tolerations:
+    - key: dedicated
+      operator: Equal
+      value: platform
+      effect: NoSchedule
+  containers:
+    - name: nginx
+      image: nginx:alpine

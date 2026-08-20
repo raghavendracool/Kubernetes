@@ -1,4 +1,0 @@
-region        = "ap-south-1"
-student_cidr  = "203.0.113.10/32"
-key_name      = "YOUR-KEY-PAIR"
-instance_type = "t3.medium"

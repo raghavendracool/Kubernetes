@@ -1,0 +1,17 @@
+Kubernetes Training Complete v2 - Validation Report
+====================================================
+Learning modules: 21
+Applications: 3
+End-to-end projects: 2
+Total files: 184
+Uncompressed bytes: 581955
+YAML syntax: PASS
+Python syntax: PASS
+Shell syntax: PASS
+JSON syntax: PASS
+Per-module README files: 21
+Per-module detailed notes: 21
+Per-module command sheets: 21
+Per-module labs: 21
+Printable master lines: 8612
+Command catalog lines: 2286

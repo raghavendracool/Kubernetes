@@ -1,0 +1,9 @@
+{
+  "name": "Kubernetes-Training-Complete-v2",
+  "baseline": "August 2026",
+  "kubernetes": "1.36",
+  "eks": "1.36 training baseline",
+  "calico": "3.32.1",
+  "learning_modules": 21,
+  "principle": "Concept modules and applications are intentionally separate."
+}

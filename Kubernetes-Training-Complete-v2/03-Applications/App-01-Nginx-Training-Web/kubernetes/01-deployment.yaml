@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: training-web
+  namespace: training-web
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: training-web
+  template:
+    metadata:
+      labels:
+        app: training-web
+    spec:
+      containers:
+        - name: web
+          image: <REGISTRY_USER>/k8s-training-web:v1
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 200m
+              memory: 128Mi
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 2
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 10
+            periodSeconds: 10

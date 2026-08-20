@@ -1,0 +1,10 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: flask-api
+  namespace: flask-api
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: flask-api

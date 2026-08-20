@@ -1,0 +1,8 @@
+<!doctype html>
+<html><head><title>DevOps Store</title></head>
+<body><h1>DevOps Training Store</h1><div id="products">Loading...</div>
+<script>
+fetch('/api/products').then(r => r.json()).then(items => {
+  document.getElementById('products').innerHTML = '<ul>' + items.map(x => `<li>${x.name} - $${x.price}</li>`).join('') + '</ul>';
+}).catch(e => document.getElementById('products').innerText = 'API error: ' + e);
+</script></body></html>

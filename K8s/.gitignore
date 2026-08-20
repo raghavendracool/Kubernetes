@@ -1,9 +1,0 @@
-.kube/
-*.pem
-*.key
-*.crt
-.env
-.terraform/
-terraform.tfstate
-terraform.tfstate.*
-*.tfplan

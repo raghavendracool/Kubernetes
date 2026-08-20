@@ -1,6 +1,0 @@
-apiVersion: v2
-name: student-web
-description: Kubernetes training chart
-type: application
-version: 0.1.0
-appVersion: "1.27"

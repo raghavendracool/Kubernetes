@@ -1,8 +1,0 @@
-flowchart TB
- IAM[IAM Identity] --> API[EKS Kubernetes API]
- API --> N1[Managed EC2 Node]
- API --> N2[Managed EC2 Node]
- N1 --> P1[Pods]
- N2 --> P2[Pods]
- P1 --> EBS[EBS CSI]
- P2 --> ALB[AWS Load Balancer Controller]
