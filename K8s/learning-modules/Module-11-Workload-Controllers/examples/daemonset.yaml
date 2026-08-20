@@ -1,0 +1,16 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: node-agent-demo
+  namespace: student-app
+spec:
+  selector:
+    matchLabels: {app: node-agent-demo}
+  template:
+    metadata:
+      labels: {app: node-agent-demo}
+    spec:
+      containers:
+        - name: agent
+          image: busybox:1.36
+          command: ["sh","-c","while true; do echo node-agent-alive; sleep 60; done"]

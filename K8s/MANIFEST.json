@@ -1,0 +1,144 @@
+{
+  "course": "Kubernetes for DevOps \u2014 Zero to Production",
+  "baseline": {
+    "kubernetes": "1.36",
+    "ubuntu": "24.04 LTS",
+    "runtime": "containerd",
+    "calico": "3.32.x",
+    "aws_region": "ap-south-1"
+  },
+  "module_count": 21,
+  "modules": [
+    {
+      "number": 1,
+      "slug": "Kubernetes-Foundation",
+      "title": "Kubernetes Foundation \u2014 The 3 Whys and Docker vs Kubernetes",
+      "outcome": "Explain why Kubernetes exists before touching YAML."
+    },
+    {
+      "number": 2,
+      "slug": "Kubernetes-Architecture",
+      "title": "Kubernetes Architecture \u2014 Control Plane and Worker Nodes",
+      "outcome": "Draw the cluster and explain what happens after kubectl apply."
+    },
+    {
+      "number": 3,
+      "slug": "Kubectl-YAML-and-First-Pod",
+      "title": "kubectl, YAML and the First Pod",
+      "outcome": "Read manifests and create, inspect and delete a Pod."
+    },
+    {
+      "number": 4,
+      "slug": "Pods",
+      "title": "Pods \u2014 Lifecycle, Multi-Container Patterns and Debugging",
+      "outcome": "Understand Pod lifecycle, container states and multi-container patterns."
+    },
+    {
+      "number": 5,
+      "slug": "ReplicaSets-and-Deployments",
+      "title": "ReplicaSets and Deployments \u2014 Self-Healing, Scaling and Rollouts",
+      "outcome": "Run a replicated app and safely update/rollback it."
+    },
+    {
+      "number": 6,
+      "slug": "Labels-Selectors-and-Namespaces",
+      "title": "Labels, Selectors and Namespaces",
+      "outcome": "Organize objects and understand how Kubernetes resources find each other."
+    },
+    {
+      "number": 7,
+      "slug": "Services-and-DNS",
+      "title": "Services and DNS \u2014 Stable Networking and Discovery",
+      "outcome": "Expose Pods through a stable Service and use DNS."
+    },
+    {
+      "number": 8,
+      "slug": "ConfigMaps-and-Secrets",
+      "title": "ConfigMaps and Secrets",
+      "outcome": "Externalize application configuration and sensitive values."
+    },
+    {
+      "number": 9,
+      "slug": "Probes-Resources-and-QoS",
+      "title": "Probes, Resource Requests/Limits and QoS",
+      "outcome": "Teach Kubernetes when an app is started, ready, healthy and how much resource it needs."
+    },
+    {
+      "number": 10,
+      "slug": "Kubernetes-Storage",
+      "title": "Kubernetes Storage \u2014 Volumes, PV, PVC and StorageClass",
+      "outcome": "Understand ephemeral and persistent storage."
+    },
+    {
+      "number": 11,
+      "slug": "Workload-Controllers",
+      "title": "Workload Controllers \u2014 DaemonSet, StatefulSet, Job and CronJob",
+      "outcome": "Choose the correct controller for each workload type."
+    },
+    {
+      "number": 12,
+      "slug": "Scheduling",
+      "title": "Kubernetes Scheduling \u2014 Placement and Topology",
+      "outcome": "Control where Pods can or should run."
+    },
+    {
+      "number": 13,
+      "slug": "ServiceAccounts-and-RBAC",
+      "title": "ServiceAccounts and RBAC",
+      "outcome": "Implement namespace-scoped least privilege."
+    },
+    {
+      "number": 14,
+      "slug": "Kubernetes-Networking",
+      "title": "Kubernetes Networking \u2014 Pod, Service, CNI and DNS",
+      "outcome": "Trace Pod-to-Pod, Pod-to-Service and DNS traffic."
+    },
+    {
+      "number": 15,
+      "slug": "NetworkPolicies",
+      "title": "NetworkPolicies \u2014 East-West Traffic Control",
+      "outcome": "Move from default allow toward explicit workload communication."
+    },
+    {
+      "number": 16,
+      "slug": "Ingress-and-TLS",
+      "title": "Ingress and TLS",
+      "outcome": "Route HTTP traffic and understand controller responsibility."
+    },
+    {
+      "number": 17,
+      "slug": "Autoscaling-and-Availability",
+      "title": "Autoscaling and Availability \u2014 HPA, PDB and Node Scaling",
+      "outcome": "Scale Pods and protect capacity during voluntary disruption."
+    },
+    {
+      "number": 18,
+      "slug": "Helm",
+      "title": "Helm \u2014 Package Kubernetes Applications",
+      "outcome": "Convert the progressive app into a reusable Helm chart."
+    },
+    {
+      "number": 19,
+      "slug": "Monitoring-Logging-and-Troubleshooting",
+      "title": "Monitoring, Logging and Troubleshooting",
+      "outcome": "Use a repeatable incident workflow."
+    },
+    {
+      "number": 20,
+      "slug": "Kubernetes-Security",
+      "title": "Kubernetes Security",
+      "outcome": "Apply baseline workload, identity, network and supply-chain controls."
+    },
+    {
+      "number": 21,
+      "slug": "Day2-Operations",
+      "title": "Day-2 Operations \u2014 Maintenance, Upgrades and Recovery",
+      "outcome": "Operate an existing cluster after installation."
+    }
+  ],
+  "cluster_tracks": [
+    "Minikube Laptop",
+    "kubeadm on EC2 \u2014 Self-Managed / On-Premises Simulation",
+    "Amazon EKS"
+  ]
+}

@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata: {name: bad-probe, namespace: student-app}
+spec:
+  containers:
+    - name: app
+      image: nginx:1.27
+      readinessProbe:
+        httpGet: {path: /not-here, port: 80}
+        periodSeconds: 3

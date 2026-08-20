@@ -1,0 +1,3 @@
+flowchart LR
+ A[kubectl apply] --> B[API Server] --> C[(State)]
+ B --> D[Controller] --> E[ReplicaSet/Pods] --> F[Scheduler] --> G[kubelet] --> H[containerd]

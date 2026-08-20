@@ -1,0 +1,23 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: sdhub-k8s
+  region: ap-south-1
+  version: "1.36"
+
+iam:
+  withOIDC: true
+
+managedNodeGroups:
+  - name: general-workers
+    instanceType: t3.medium
+    minSize: 2
+    desiredCapacity: 2
+    maxSize: 4
+    volumeSize: 30
+    labels:
+      workload: general
+      training: "true"
+    tags:
+      Course: kubernetes

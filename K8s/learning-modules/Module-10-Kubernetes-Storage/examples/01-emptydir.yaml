@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: emptydir-demo
+  namespace: student-app
+spec:
+  containers:
+    - name: writer
+      image: busybox:1.36
+      command: ["sh","-c","echo hello > /data/message; sleep 3600"]
+      volumeMounts:
+        - name: data
+          mountPath: /data
+    - name: reader
+      image: busybox:1.36
+      command: ["sh","-c","while true; do cat /data/message; sleep 10; done"]
+      volumeMounts:
+        - name: data
+          mountPath: /data
+  volumes:
+    - name: data
+      emptyDir: {}
