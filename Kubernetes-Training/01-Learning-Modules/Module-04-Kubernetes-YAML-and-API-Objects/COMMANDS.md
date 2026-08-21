@@ -1,93 +1,71 @@
-# Module 04 — Kubernetes YAML and API Objects: Command Sheet
+# Module 04 — Command Sheet
 
-## Before You Start
+## API Discovery
 
 ```bash
-kubectl config current-context
-kubectl cluster-info
-kubectl get nodes -o wide
+kubectl api-resources
+kubectl api-resources -o wide
+kubectl api-resources --namespaced=true
+kubectl api-resources --namespaced=false
+kubectl api-versions
 ```
 
-## Topic Commands
-
-### Create YAML without creating object
+## Explain Schema
 
 ```bash
-kubectl create deployment demo --image=nginx --dry-run=client -o yaml
+kubectl explain pod
+kubectl explain pod.spec
+kubectl explain pod.spec.containers
+kubectl explain deployment.spec
+kubectl explain service.spec.type
+kubectl explain deployment --recursive
 ```
 
-**Why:** Use this when you need to create yaml without creating object. After running it, verify the result with `kubectl get`, `kubectl describe`, or a more specific status command.
-
-### Validate apply
+## Generate YAML
 
 ```bash
-kubectl apply --dry-run=server -f example.yaml
+kubectl run nginx --image=nginx:1.28-alpine --dry-run=client -o yaml
+kubectl run nginx --image=nginx:1.28-alpine --dry-run=client -o yaml > pod.yaml
+kubectl create deployment web --image=nginx:1.28-alpine --dry-run=client -o yaml > deployment.yaml
+kubectl create service clusterip web --tcp=80:80 --dry-run=client -o yaml > service.yaml
 ```
 
-**Why:** Use this when you need to validate apply. After running it, verify the result with `kubectl get`, `kubectl describe`, or a more specific status command.
-
-### Preview difference
+## Validate / Diff / Apply
 
 ```bash
-kubectl diff -f example.yaml
+kubectl apply --dry-run=client -f pod.yaml
+kubectl apply --dry-run=server -f pod.yaml
+kubectl diff -f pod.yaml
+kubectl apply -f pod.yaml
+kubectl apply -f examples/
 ```
 
-**Why:** Use this when you need to preview difference. After running it, verify the result with `kubectl get`, `kubectl describe`, or a more specific status command.
-
-### Apply manifest
+## Inspect
 
 ```bash
-kubectl apply -f example.yaml
-```
-
-**Why:** Use this when you need to apply manifest. After running it, verify the result with `kubectl get`, `kubectl describe`, or a more specific status command.
-
-### Get object YAML
-
-```bash
-kubectl get deployment demo -o yaml
-```
-
-**Why:** Use this when you need to get object yaml. After running it, verify the result with `kubectl get`, `kubectl describe`, or a more specific status command.
-
-## Universal Inspection Commands
-
-```bash
-# Wide output includes node/IP information where applicable
-kubectl get <resource> -o wide
-
-# Full desired + observed object representation
-kubectl get <resource> <name> -o yaml
-
-# Human-readable state, conditions and events
-kubectl describe <resource> <name>
-
-# Watch changes live
-kubectl get <resource> -w
-
-# Show recent events
-kubectl get events --sort-by=.lastTimestamp
-
-# Explain schema fields
-kubectl explain <resource>
-kubectl explain <resource>.spec
-```
-
-## Useful Output Formats
-
-```bash
+kubectl get pods
+kubectl get pod nginx -o yaml
+kubectl get pod nginx -o json
 kubectl get pods -o name
-kubectl get pods -o wide
-kubectl get pods -o yaml
-kubectl get pods -o json
-kubectl get pods -o custom-columns=NAME:.metadata.name,NODE:.spec.nodeName,PHASE:.status.phase
+kubectl describe pod nginx
 ```
 
-## Safety Commands Before a Change
+## Custom Output
 
 ```bash
-kubectl config current-context
-kubectl config view --minify
-kubectl diff -f <manifest.yaml>
-kubectl apply --dry-run=server -f <manifest.yaml>
+kubectl get pods -o custom-columns=NAME:.metadata.name,PHASE:.status.phase,NODE:.spec.nodeName
+kubectl get pod nginx -o jsonpath='{.status.podIP}'
+```
+
+## CRDs
+
+```bash
+kubectl get crd
+```
+
+## Cleanup
+
+```bash
+kubectl delete -f pod.yaml --ignore-not-found
+kubectl delete -f examples/ --ignore-not-found
 ```

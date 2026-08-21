@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: yaml-web
+spec:
+  type: ClusterIP
+  selector:
+    app: yaml-web
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: http

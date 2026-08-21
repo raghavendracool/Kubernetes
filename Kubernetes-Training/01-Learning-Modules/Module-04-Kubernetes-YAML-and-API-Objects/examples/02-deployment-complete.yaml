@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: yaml-web
+  labels:
+    app: yaml-web
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: yaml-web
+  template:
+    metadata:
+      labels:
+        app: yaml-web
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.28-alpine
+          ports:
+            - name: http
+              containerPort: 80
+          resources:
+            requests:
+              cpu: "25m"
+              memory: "32Mi"
+            limits:
+              cpu: "100m"
+              memory: "64Mi"

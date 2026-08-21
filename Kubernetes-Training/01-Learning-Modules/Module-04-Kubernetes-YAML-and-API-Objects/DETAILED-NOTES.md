@@ -1,46 +1,188 @@
-# Detailed Notes — Kubernetes YAML and API Objects
+# Module 04 — Detailed Notes
 
-## Anatomy
+## 1. Kubernetes Object Request Flow
 
-```yaml
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: web
-  namespace: demo
-  labels:
-    app: web
-spec:
-  replicas: 3
-  selector:
-    matchLabels:
-      app: web
-  template:
-    metadata:
-      labels:
-        app: web
-    spec:
-      containers:
-        - name: web
-          image: nginx:1.28
+```text
+kubectl / CI pipeline
+        |
+        v
+kube-apiserver
+        |
+        +--> authenticate caller
+        +--> authorize action
+        +--> admission processing
+        +--> validate schema
+        |
+        v
+etcd stores object
+        |
+        v
+controllers watch changes
 ```
 
-`apiVersion` + `kind` identify the schema. `metadata.name` and namespace identify the object. `spec` is the desired state.
+The CLI is only a client. The API server is the central API entry point.
 
-## Why Status Is Usually Not in Git
+## 2. Object Identity
 
-Controllers and kubelets continuously update `status` to report observed state. You normally author `spec`; Kubernetes owns most `status` fields.
+For namespaced resources, think of identity as:
 
-## Declarative Workflow
+```text
+namespace + resource type + name
+```
+
+Example:
+
+```text
+training / Deployment / web
+```
+
+## 3. API Discovery Is a Core Skill
+
+Do not teach students to memorize every object.
 
 ```bash
+kubectl api-resources
+kubectl api-versions
+```
+
+Key columns in `api-resources`:
+
+```text
+NAME
+SHORTNAMES
+APIVERSION
+NAMESPACED
+KIND
+```
+
+## 4. Built-In vs Custom Resources
+
+Built-in:
+
+```text
+Deployment
+```
+
+Custom resource example after installing a CRD:
+
+```text
+Certificate
+```
+
+Check installed CRDs:
+
+```bash
+kubectl get crd
+```
+
+## 5. Reconciliation
+
+A Deployment with:
+
+```yaml
+spec:
+  replicas: 3
+```
+
+means "keep three replicas", not "create exactly three once".
+
+```text
+Desired 3 / Actual 2
+         |
+         v
+Controller detects difference
+         |
+         v
+Creates replacement
+         |
+Desired 3 / Actual 3
+```
+
+## 6. YAML Data Structures
+
+Scalar:
+
+```yaml
+replicas: 3
+```
+
+Map:
+
+```yaml
+labels:
+  app: web
+  tier: frontend
+```
+
+List of maps:
+
+```yaml
+containers:
+  - name: web
+    image: nginx:1.28-alpine
+  - name: helper
+    image: busybox:1.36
+```
+
+## 7. Multi-Document Manifests
+
+```yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: training
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+  namespace: training
+```
+
+Apply all objects:
+
+```bash
+kubectl apply -f multi.yaml
+```
+
+## 8. Validation Workflow
+
+Recommended operational habit:
+
+```text
+current context
+   ↓
+current namespace
+   ↓
+dry-run
+   ↓
+diff
+   ↓
+apply
+   ↓
+verify
+```
+
+Commands:
+
+```bash
+kubectl config current-context
 kubectl apply --dry-run=server -f app.yaml
 kubectl diff -f app.yaml
 kubectl apply -f app.yaml
 ```
 
-Server-side dry run catches schema/admission problems using the actual API server. `diff` shows intended changes before mutation.
+## 9. Full Manifest Reading Checklist
 
-## API Lifecycle
+For every Kubernetes YAML ask:
 
-Kubernetes APIs evolve. Before a cluster upgrade, scan manifests/Helm output for deprecated or removed versions. A manifest that worked on an old cluster may be rejected after an API removal.
+1. Which API group/version?
+2. Which kind?
+3. Name?
+4. Namespace?
+5. Labels?
+6. Desired `spec`?
+7. Which other objects are referenced?
+8. Which controller/component reacts?
+9. What can fail?
+10. Which command proves success?
