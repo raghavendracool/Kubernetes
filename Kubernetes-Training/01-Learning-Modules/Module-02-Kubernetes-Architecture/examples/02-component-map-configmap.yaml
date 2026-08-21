@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: architecture-component-map
+  namespace: architecture-lab
+  labels:
+    module: architecture
+    purpose: learning
+    owner: devops-training
+data:
+  control-plane: kube-apiserver,etcd,kube-scheduler,kube-controller-manager
+  worker-node: kubelet,container-runtime,kube-proxy
+  notes: API server is entry point; scheduler places Pods; kubelet runs Pods

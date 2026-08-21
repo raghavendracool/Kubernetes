@@ -1,4 +1,4 @@
-# Module 01 — Kubernetes Foundation
+# Module 01 â€” Kubernetes Foundation
 
 ## 1. Module Goal
 
@@ -8,7 +8,7 @@ By the end of this module, a student should be able to **explain the concept in 
 
 ### What is this topic?
 
-Kubernetes is a platform for running and operating containerized applications across one or more machines. Instead of manually starting containers and deciding where they run, you declare the state you want—such as three replicas of an API—and Kubernetes continuously works to keep the cluster at that state.
+Kubernetes is a platform for running and operating containerized applications across one or more machines. Instead of manually starting containers and deciding where they run, you declare the state you wantâ€”such as three replicas of an APIâ€”and Kubernetes continuously works to keep the cluster at that state.
 
 ### Why do DevOps engineers need it?
 
@@ -68,7 +68,7 @@ The exact components involved differ by topic, but this flow is the basis for un
 
 Read `COMMANDS.md` in this module for the extended command sheet and explanations.
 
-## 7. Command Workflow — Do Not Skip Verification
+## 7. Command Workflow â€” Do Not Skip Verification
 
 Use this workflow during demos:
 
@@ -112,6 +112,22 @@ Then ask:
 3. Which ports, volumes, identities or policies are being referenced?
 4. What command proves it is working?
 
+## 8A. YAML Components for This Module
+
+For foundation-level YAML, students should identify:
+
+- `apiVersion` and `kind` to recognize object type (Pod/Deployment/Service).
+- `metadata.name` and labels for object identity and grouping.
+- `spec.containers[].image` for runtime payload.
+- `spec.replicas` (Deployment) for desired scale.
+- `spec.selector` and `spec.template.metadata.labels` relationship.
+
+Use examples in `examples/`:
+
+- `01-pod-basic.yaml`
+- `02-deployment-basic.yaml`
+- `03-service-basic.yaml`
+
 ## 9. Common Problems
 
 | Symptom | What to check first |
@@ -145,6 +161,13 @@ Be able to answer these without reading notes:
 3. Which command would you run first when it fails?
 4. What is the most common misconfiguration?
 5. How would your approach differ in Amazon EKS versus self-managed Kubernetes?
+
+## 13A. See Also
+
+- Course roadmap: `../../00-Course-Guide/01-COURSE-ROADMAP.md`
+- YAML checklist: `../../05-Cheat-Sheets/yaml-checklist.md`
+- Applications practice: `../../03-Applications/README.md`
+- Continue with the next module folder in sequence.
 
 ## 14. Module Completion Checklist
 

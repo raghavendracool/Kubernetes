@@ -10,6 +10,17 @@ kubectl get nodes -o wide
 
 ## Topic Commands
 
+### Compare Service types quickly
+
+```bash
+kubectl get svc -n svc-types -o wide
+kubectl get svc demo-nodeport -n svc-types -o jsonpath='{.spec.ports[0].nodePort}'
+kubectl get svc demo-loadbalancer -n svc-types -o jsonpath='{.status.loadBalancer.ingress[0].ip}'
+kubectl get svc docs-externalname -n svc-types -o jsonpath='{.spec.externalName}'
+```
+
+**Why:** Use this when you need to compare the runtime fields that differ by Service type.
+
 ### List services
 
 ```bash

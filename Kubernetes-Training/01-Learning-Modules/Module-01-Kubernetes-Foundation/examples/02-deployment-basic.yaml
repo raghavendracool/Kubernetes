@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: foundation-web
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: foundation-web
+  template:
+    metadata:
+      labels:
+        app: foundation-web
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.28-alpine
+          ports:
+            - containerPort: 80

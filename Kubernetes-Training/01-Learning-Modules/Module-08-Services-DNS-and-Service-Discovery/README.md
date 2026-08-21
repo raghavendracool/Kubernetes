@@ -1,4 +1,4 @@
-# Module 08 — Services, DNS and Service Discovery
+# Module 08 â€” Services, DNS and Service Discovery
 
 ## 1. Module Goal
 
@@ -29,6 +29,22 @@ Kubernetes is operated through APIs and controllers. A DevOps engineer must unde
 - CoreDNS naming
 - port versus targetPort
 - service discovery
+
+## 3A. Service Type Quick Comparison
+
+| Type | Reachability | Typical use | Key field(s) |
+|---|---|---|---|
+| `ClusterIP` | Inside cluster only | Internal microservice-to-microservice traffic | `type: ClusterIP` |
+| `NodePort` | `<NodeIP>:nodePort` | Basic external testing/lab access | `type: NodePort`, `nodePort` |
+| `LoadBalancer` | External LB IP/hostname | Cloud/native external access | `type: LoadBalancer` |
+| `ExternalName` | DNS CNAME to external host | Bridge in-cluster clients to external DNS target | `type: ExternalName`, `externalName` |
+
+Use the ready manifests in `examples/`:
+
+- `01-clusterip.yaml`
+- `02-nodeport.yaml`
+- `03-loadbalancer.yaml`
+- `04-externalname.yaml`
 
 ## 4. Mental Model
 
@@ -68,7 +84,7 @@ The exact components involved differ by topic, but this flow is the basis for un
 
 Read `COMMANDS.md` in this module for the extended command sheet and explanations.
 
-## 7. Command Workflow — Do Not Skip Verification
+## 7. Command Workflow â€” Do Not Skip Verification
 
 Use this workflow during demos:
 
@@ -112,6 +128,11 @@ Then ask:
 3. Which ports, volumes, identities or policies are being referenced?
 4. What command proves it is working?
 
+Important distinction for beginners:
+
+- `kind` means Kubernetes object type (for example `Service`, `Deployment`, `Pod`).
+- `spec.type` inside a `Service` means Service exposure model (`ClusterIP`, `NodePort`, `LoadBalancer`, `ExternalName`).
+
 ## 9. Common Problems
 
 | Symptom | What to check first |
@@ -145,6 +166,13 @@ Be able to answer these without reading notes:
 3. Which command would you run first when it fails?
 4. What is the most common misconfiguration?
 5. How would your approach differ in Amazon EKS versus self-managed Kubernetes?
+
+## 13A. See Also
+
+- Course roadmap: `../../00-Course-Guide/01-COURSE-ROADMAP.md`
+- YAML checklist: `../../05-Cheat-Sheets/yaml-checklist.md`
+- Applications practice: `../../03-Applications/README.md`
+- Continue with the next module folder in sequence.
 
 ## 14. Module Completion Checklist
 

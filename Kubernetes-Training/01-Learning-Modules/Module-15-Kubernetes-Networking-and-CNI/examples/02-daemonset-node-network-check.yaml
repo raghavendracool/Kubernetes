@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: node-network-check
+  namespace: kube-system
+spec:
+  selector:
+    matchLabels:
+      app: node-network-check
+  template:
+    metadata:
+      labels:
+        app: node-network-check
+    spec:
+      hostNetwork: true
+      tolerations:
+        - operator: Exists
+      containers:
+        - name: check
+          image: busybox:1.36
+          command: ["sh", "-c", "ip addr; ip route; sleep 3600"]

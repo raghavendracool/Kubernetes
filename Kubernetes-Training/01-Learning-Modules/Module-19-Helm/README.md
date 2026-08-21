@@ -1,4 +1,4 @@
-# Module 19 — Helm
+# Module 19 â€” Helm
 
 ## 1. Module Goal
 
@@ -73,7 +73,7 @@ The exact components involved differ by topic, but this flow is the basis for un
 
 Read `COMMANDS.md` in this module for the extended command sheet and explanations.
 
-## 7. Command Workflow — Do Not Skip Verification
+## 7. Command Workflow â€” Do Not Skip Verification
 
 Use this workflow during demos:
 
@@ -117,6 +117,20 @@ Then ask:
 3. Which ports, volumes, identities or policies are being referenced?
 4. What command proves it is working?
 
+## 8A. YAML Components for This Module
+
+For Helm-driven YAML, students should separate:
+
+- Chart templates (`templates/*.yaml`) from values input (`values.yaml`).
+- Runtime configuration fields (`replicaCount`, `service.type`, resources).
+- Environment overrides from base defaults.
+- Rendered Kubernetes YAML (`helm template`) versus source templates.
+
+Use examples in `examples/`:
+
+- `01-values-dev.yaml`
+- `02-values-prod.yaml`
+
 ## 9. Common Problems
 
 | Symptom | What to check first |
@@ -150,6 +164,13 @@ Be able to answer these without reading notes:
 3. Which command would you run first when it fails?
 4. What is the most common misconfiguration?
 5. How would your approach differ in Amazon EKS versus self-managed Kubernetes?
+
+## 13A. See Also
+
+- Course roadmap: `../../00-Course-Guide/01-COURSE-ROADMAP.md`
+- YAML checklist: `../../05-Cheat-Sheets/yaml-checklist.md`
+- Applications practice: `../../03-Applications/README.md`
+- Continue with the next module folder in sequence.
 
 ## 14. Module Completion Checklist
 

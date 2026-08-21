@@ -124,6 +124,20 @@ containers:
     image: busybox:1.36
 ```
 
+## 6A. `kind` Is Object Type, Not a Nested Option
+
+New students commonly confuse top-level `kind` with nested spec options.
+
+- `kind: Service` means this object belongs to the Service API schema.
+- `spec.type: NodePort` is one setting inside a Service object.
+
+Think of it this way:
+
+```text
+kind = object category
+spec.* = desired configuration for that category
+```
+
 ## 7. Multi-Document Manifests
 
 ```yaml

@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: arch-nginx
+  namespace: architecture-lab
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: arch-nginx
+  template:
+    metadata:
+      labels:
+        app: arch-nginx
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.28-alpine
+          ports:
+            - containerPort: 80

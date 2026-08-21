@@ -726,6 +726,13 @@ Module-04-Kubernetes-YAML-and-API-Objects/
 10. What is a CRD?
 11. Why must Deployment selector and Pod template labels match?
 
+## 21A. See Also
+
+- Course roadmap: `../../00-Course-Guide/01-COURSE-ROADMAP.md`
+- YAML checklist: `../../05-Cheat-Sheets/yaml-checklist.md`
+- Applications practice: `../../03-Applications/README.md`
+- Continue with the next module folder in sequence.
+
 ---
 
 ## 22. Completion Checklist

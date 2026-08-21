@@ -6,6 +6,8 @@ Use this only for fast Kubernetes practice. The real administration track in thi
 
 Prerequisites: Docker and kubectl.
 
+For Windows and WSL setup, follow `README_install.md` in this same folder before creating the cluster.
+
 ```bash
 kind create cluster --name k8s-training
 kubectl cluster-info --context kind-k8s-training

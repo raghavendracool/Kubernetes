@@ -1,4 +1,4 @@
-# Module 20 — Monitoring, Logging and Troubleshooting
+# Module 20 â€” Monitoring, Logging and Troubleshooting
 
 ## 1. Module Goal
 
@@ -54,7 +54,7 @@ The exact components involved differ by topic, but this flow is the basis for un
 
 ## 5. Key Points to Teach
 
-- Troubleshoot from symptoms to evidence: status → events → logs → config → networking/storage.
+- Troubleshoot from symptoms to evidence: status â†’ events â†’ logs â†’ config â†’ networking/storage.
 - Events are often the fastest way to understand Pending and scheduling failures.
 - Monitoring is proactive; troubleshooting is reactive investigation.
 
@@ -71,7 +71,7 @@ The exact components involved differ by topic, but this flow is the basis for un
 
 Read `COMMANDS.md` in this module for the extended command sheet and explanations.
 
-## 7. Command Workflow — Do Not Skip Verification
+## 7. Command Workflow â€” Do Not Skip Verification
 
 Use this workflow during demos:
 
@@ -148,6 +148,13 @@ Be able to answer these without reading notes:
 3. Which command would you run first when it fails?
 4. What is the most common misconfiguration?
 5. How would your approach differ in Amazon EKS versus self-managed Kubernetes?
+
+## 13A. See Also
+
+- Course roadmap: `../../00-Course-Guide/01-COURSE-ROADMAP.md`
+- YAML checklist: `../../05-Cheat-Sheets/yaml-checklist.md`
+- Applications practice: `../../03-Applications/README.md`
+- Continue with the next module folder in sequence.
 
 ## 14. Module Completion Checklist
 

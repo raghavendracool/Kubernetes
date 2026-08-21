@@ -1,241 +1,273 @@
-00-Course-Guide/
-  01-COURSE-ROADMAP.md
-  02-PREREQUISITES.md
-  03-LAB-RULES.md
-  04-VERSION-NOTES.md
-  05-OFFICIAL-REFERENCES.md
-01-Learning-Modules/
-  Module-01-Kubernetes-Foundation/
-    COMMANDS.md
-    DETAILED-NOTES.md
-    LAB.md
-    README.md
-  Module-02-Kubernetes-Architecture/
-    COMMANDS.md
-    DETAILED-NOTES.md
-    LAB.md
-    README.md
-    REQUEST-FLOW.md
-  Module-03-Kubectl-Contexts-and-Inspection/
-    COMMANDS.md
-    DETAILED-NOTES.md
-    LAB.md
-    README.md
-  Module-04-Kubernetes-YAML-and-API-Objects/
-    COMMANDS.md
-    DETAILED-NOTES.md
-    LAB.md
-    README.md
-  Module-05-Pods-and-Pod-Lifecycle/
-    COMMANDS.md
-    DETAILED-NOTES.md
-    LAB.md
-    README.md
-    examples/
-      pod.yaml
-  Module-06-Deployments-Rollouts-and-Rollbacks/
-    COMMANDS.md
-    DETAILED-NOTES.md
-    LAB.md
-    README.md
-    examples/
-      deployment.yaml
-  Module-07-Labels-Selectors-Annotations-and-Namespaces/
-    COMMANDS.md
-    DETAILED-NOTES.md
-    LAB.md
-    README.md
-  Module-08-Services-DNS-and-Service-Discovery/
-    COMMANDS.md
-    DETAILED-NOTES.md
-    LAB.md
-    README.md
-    examples/
-      service.yaml
-  Module-09-ConfigMaps-and-Secrets/
-    COMMANDS.md
-    DETAILED-NOTES.md
-    LAB.md
-    README.md
-    examples/
-      config-secret-example.yaml
-  Module-10-Probes-Resources-and-QoS/
-    COMMANDS.md
-    DETAILED-NOTES.md
-    LAB.md
-    README.md
-    examples/
-      probes-resources.yaml
-  Module-11-Storage-PV-PVC-and-StorageClass/
-    COMMANDS.md
-    DETAILED-NOTES.md
-    LAB.md
-    README.md
-    examples/
-      pvc.yaml
-  Module-12-Workload-Controllers/
-    COMMANDS.md
-    DETAILED-NOTES.md
-    LAB.md
-    README.md
-    examples/
-      job.yaml
-  Module-13-Scheduling-Affinity-Taints-and-Tolerations/
-    COMMANDS.md
-    DETAILED-NOTES.md
-    LAB.md
-    README.md
-    examples/
-      scheduling.yaml
-  Module-14-ServiceAccounts-and-RBAC/
-    COMMANDS.md
-    DETAILED-NOTES.md
-    LAB.md
-    README.md
-    examples/
-      rbac-readonly.yaml
-  Module-15-Kubernetes-Networking-and-CNI/
-    COMMANDS.md
-    DETAILED-NOTES.md
-    LAB.md
-    README.md
-  Module-16-NetworkPolicy/
-    COMMANDS.md
-    DETAILED-NOTES.md
-    LAB.md
-    README.md
-    examples/
-      default-deny.yaml
-  Module-17-Ingress-Gateway-and-TLS/
-    COMMANDS.md
-    DETAILED-NOTES.md
-    LAB.md
-    README.md
-  Module-18-Autoscaling-and-Availability/
-    COMMANDS.md
-    DETAILED-NOTES.md
-    LAB.md
-    README.md
-    examples/
-      hpa-pdb.yaml
-  Module-19-Helm/
-    COMMANDS.md
-    DETAILED-NOTES.md
-    LAB.md
-    README.md
-  Module-20-Monitoring-Logging-and-Troubleshooting/
-    COMMANDS.md
-    DETAILED-NOTES.md
-    LAB.md
-    README.md
-    TROUBLESHOOTING-FLOW.md
-  Module-21-Security-and-Day2-Operations/
-    COMMANDS.md
-    DETAILED-NOTES.md
-    LAB.md
-    README.md
-    examples/
-      secure-pod.yaml
-  README.md
-02-Cluster-Setup/
-  01-Local-Quick-Lab/
-    README.md
-  02-Kubeadm-EC2-OnPrem-Style/
-    01-ARCHITECTURE-AND-EC2.md
-    02-NETWORK-AND-SECURITY.md
-    03-PREPARE-UBUNTU-ALL-NODES.md
-    04-INSTALL-CONTAINERD.md
-    05-INSTALL-KUBERNETES-PACKAGES.md
-    06-INITIALIZE-CONTROL-PLANE.md
-    07-INSTALL-CALICO-CNI.md
-    08-JOIN-WORKERS.md
-    09-VALIDATE-CLUSTER.md
-    10-ADMIN-KUBECONFIG.md
-    11-TROUBLESHOOTING.md
-    12-RESET-AND-CLEANUP.md
-    ALL-COMMANDS.md
-    README.md
-  03-Amazon-EKS/
-    01-PREREQUISITES.md
-    02-CREATE-EKS-WITH-EKSCTL.md
-    03-KUBECONFIG-AND-VALIDATION.md
-    04-EKS-ACCESS-ENTRIES.md
-    05-EKS-ADDONS.md
-    06-POD-IDENTITY.md
-    07-EBS-CSI.md
-    08-METRICS-SERVER-AND-HPA.md
-    09-AWS-LOAD-BALANCER-CONTROLLER.md
-    10-OBSERVABILITY.md
-    11-SCALING.md
-    12-SECURITY.md
-    13-UPGRADE.md
-    14-CLEANUP.md
-    ALL-COMMANDS.md
-    README.md
-    terraform/
-      README.md
-  README.md
-03-Applications/
-  App-01-Nginx-Training-Web/
-    Dockerfile
-    README.md
-    html/
-      index.html
-    kubernetes/
-      00-namespace.yaml
-      01-deployment.yaml
-      02-service.yaml
-  App-02-Python-Flask-API/
-    Dockerfile
-    README.md
-    app.py
-    kubernetes/
-      00-namespace.yaml
-      01-configmap.yaml
-      02-deployment.yaml
-      03-service.yaml
-      04-hpa.yaml
-      05-pdb.yaml
-    requirements.txt
-  App-03-Three-Tier-Store/
-    README.md
-    backend/
-      Dockerfile
-      app.py
-      requirements.txt
-    frontend/
-      Dockerfile
-      index.html
-      nginx.conf
-    kubernetes/
-      00-namespace.yaml
-      01-secret.yaml
-      02-postgres-service.yaml
-      03-postgres-statefulset.yaml
-      04-backend.yaml
-      05-backend-hpa-pdb.yaml
-      06-frontend.yaml
-      07-networkpolicy.yaml
-  README.md
-04-End-to-End-Projects/
-  Project-01-Kubeadm-Cluster-and-App/
-    README.md
-  Project-02-Amazon-EKS-Production-Style/
-    README.md
-    ingress-example.yaml
-05-Cheat-Sheets/
-  kubectl-command-index.md
-  troubleshooting-cheatsheet.md
-  yaml-checklist.md
-06-Interview-Preparation/
-  01-FUNDAMENTALS-QA.md
-  02-TROUBLESHOOTING-SCENARIOS.md
-KUBERNETES-COMPLETE-COMMAND-CATALOG.md
-KUBERNETES-PRINTABLE-MASTER-NOTES.md
-MANIFEST.json
-README.md
-REPOSITORY-TREE.txt
-VALIDATION-REPORT.txt
-WHAT-CHANGED-v2.md
-scripts/
-  validate-cluster.sh
+Kubernetes-Training
+├── 00-Course-Guide
+│   ├── 01-COURSE-ROADMAP.md
+│   ├── 02-PREREQUISITES.md
+│   ├── 03-LAB-RULES.md
+│   ├── 04-VERSION-NOTES.md
+│   └── 05-OFFICIAL-REFERENCES.md
+├── 01-Learning-Modules
+│   ├── Module-01-Kubernetes-Foundation
+│   │   ├── examples
+│   │   │   ├── 01-pod-basic.yaml
+│   │   │   ├── 02-deployment-basic.yaml
+│   │   │   └── 03-service-basic.yaml
+│   │   ├── COMMANDS.md
+│   │   ├── DETAILED-NOTES.md
+│   │   ├── LAB.md
+│   │   └── README.md
+│   ├── Module-02-Kubernetes-Architecture
+│   │   ├── examples
+│   │   │   ├── 01-namespace-and-pod.yaml
+│   │   │   ├── 02-component-map-configmap.yaml
+│   │   │   └── 03-deployment-scheduling-view.yaml
+│   │   ├── COMMANDS.md
+│   │   ├── DETAILED-NOTES.md
+│   │   ├── LAB.md
+│   │   ├── README.md
+│   │   └── REQUEST-FLOW.md
+│   ├── Module-03-Kubectl-Contexts-and-Inspection
+│   │   ├── examples
+│   │   │   ├── 01-pod-for-inspection.yaml
+│   │   │   └── 02-deployment-jsonpath.yaml
+│   │   ├── COMMANDS.md
+│   │   ├── DETAILED-NOTES.md
+│   │   ├── LAB.md
+│   │   └── README.md
+│   ├── Module-04-Kubernetes-YAML-and-API-Objects
+│   │   ├── examples
+│   │   │   ├── 01-pod-complete.yaml
+│   │   │   ├── 02-deployment-complete.yaml
+│   │   │   ├── 03-service-complete.yaml
+│   │   │   └── 04-multi-object.yaml
+│   │   ├── COMMANDS.md
+│   │   ├── DETAILED-NOTES.md
+│   │   ├── LAB.md
+│   │   └── README.md
+│   ├── Module-05-Pods-and-Pod-Lifecycle
+│   │   ├── examples
+│   │   │   └── pod.yaml
+│   │   ├── COMMANDS.md
+│   │   ├── DETAILED-NOTES.md
+│   │   ├── LAB.md
+│   │   └── README.md
+│   ├── Module-06-Deployments-Rollouts-and-Rollbacks
+│   │   ├── examples
+│   │   │   └── deployment.yaml
+│   │   ├── COMMANDS.md
+│   │   ├── DETAILED-NOTES.md
+│   │   ├── LAB.md
+│   │   └── README.md
+│   ├── Module-07-Labels-Selectors-Annotations-and-Namespaces
+│   │   ├── COMMANDS.md
+│   │   ├── DETAILED-NOTES.md
+│   │   ├── LAB.md
+│   │   └── README.md
+│   ├── Module-08-Services-DNS-and-Service-Discovery
+│   │   ├── examples
+│   │   │   ├── 01-clusterip.yaml
+│   │   │   ├── 02-nodeport.yaml
+│   │   │   ├── 03-loadbalancer.yaml
+│   │   │   ├── 04-externalname.yaml
+│   │   │   └── service.yaml
+│   │   ├── COMMANDS.md
+│   │   ├── DETAILED-NOTES.md
+│   │   ├── LAB.md
+│   │   └── README.md
+│   ├── Module-09-ConfigMaps-and-Secrets
+│   │   ├── examples
+│   │   │   └── config-secret-example.yaml
+│   │   ├── COMMANDS.md
+│   │   ├── DETAILED-NOTES.md
+│   │   ├── LAB.md
+│   │   └── README.md
+│   ├── Module-10-Probes-Resources-and-QoS
+│   │   ├── examples
+│   │   │   └── probes-resources.yaml
+│   │   ├── COMMANDS.md
+│   │   ├── DETAILED-NOTES.md
+│   │   ├── LAB.md
+│   │   └── README.md
+│   ├── Module-11-Storage-PV-PVC-and-StorageClass
+│   │   ├── examples
+│   │   │   └── pvc.yaml
+│   │   ├── COMMANDS.md
+│   │   ├── DETAILED-NOTES.md
+│   │   ├── LAB.md
+│   │   └── README.md
+│   ├── Module-12-Workload-Controllers
+│   │   ├── examples
+│   │   │   └── job.yaml
+│   │   ├── COMMANDS.md
+│   │   ├── DETAILED-NOTES.md
+│   │   ├── LAB.md
+│   │   └── README.md
+│   ├── Module-13-Scheduling-Affinity-Taints-and-Tolerations
+│   │   ├── examples
+│   │   │   └── scheduling.yaml
+│   │   ├── COMMANDS.md
+│   │   ├── DETAILED-NOTES.md
+│   │   ├── LAB.md
+│   │   └── README.md
+│   ├── Module-14-ServiceAccounts-and-RBAC
+│   │   ├── examples
+│   │   │   └── rbac-readonly.yaml
+│   │   ├── COMMANDS.md
+│   │   ├── DETAILED-NOTES.md
+│   │   ├── LAB.md
+│   │   └── README.md
+│   ├── Module-15-Kubernetes-Networking-and-CNI
+│   │   ├── examples
+│   │   │   ├── 01-netshoot-pod.yaml
+│   │   │   └── 02-daemonset-node-network-check.yaml
+│   │   ├── COMMANDS.md
+│   │   ├── DETAILED-NOTES.md
+│   │   ├── LAB.md
+│   │   └── README.md
+│   ├── Module-16-NetworkPolicy
+│   │   ├── examples
+│   │   │   └── default-deny.yaml
+│   │   ├── COMMANDS.md
+│   │   ├── DETAILED-NOTES.md
+│   │   ├── LAB.md
+│   │   └── README.md
+│   ├── Module-17-Ingress-Gateway-and-TLS
+│   │   ├── examples
+│   │   │   ├── 01-ingress-basic.yaml
+│   │   │   └── 02-ingress-tls.yaml
+│   │   ├── COMMANDS.md
+│   │   ├── DETAILED-NOTES.md
+│   │   ├── LAB.md
+│   │   └── README.md
+│   ├── Module-18-Autoscaling-and-Availability
+│   │   ├── examples
+│   │   │   └── hpa-pdb.yaml
+│   │   ├── COMMANDS.md
+│   │   ├── DETAILED-NOTES.md
+│   │   ├── LAB.md
+│   │   └── README.md
+│   ├── Module-19-Helm
+│   │   ├── examples
+│   │   │   ├── 01-values-dev.yaml
+│   │   │   └── 02-values-prod.yaml
+│   │   ├── COMMANDS.md
+│   │   ├── DETAILED-NOTES.md
+│   │   ├── LAB.md
+│   │   └── README.md
+│   ├── Module-20-Monitoring-Logging-and-Troubleshooting
+│   │   ├── COMMANDS.md
+│   │   ├── DETAILED-NOTES.md
+│   │   ├── LAB.md
+│   │   ├── README.md
+│   │   └── TROUBLESHOOTING-FLOW.md
+│   ├── Module-21-Security-and-Day2-Operations
+│   │   ├── examples
+│   │   │   └── secure-pod.yaml
+│   │   ├── COMMANDS.md
+│   │   ├── DETAILED-NOTES.md
+│   │   ├── LAB.md
+│   │   └── README.md
+│   └── README.md
+├── 02-Cluster-Setup
+│   ├── 01-Local-Quick-Lab
+│   │   ├── README.md
+│   │   └── README_install.md
+│   ├── 02-Kubeadm-EC2-OnPrem-Style
+│   │   ├── 01-ARCHITECTURE-AND-EC2.md
+│   │   ├── 02-NETWORK-AND-SECURITY.md
+│   │   ├── 03-PREPARE-UBUNTU-ALL-NODES.md
+│   │   ├── 04-INSTALL-CONTAINERD.md
+│   │   ├── 05-INSTALL-KUBERNETES-PACKAGES.md
+│   │   ├── 06-INITIALIZE-CONTROL-PLANE.md
+│   │   ├── 07-INSTALL-CALICO-CNI.md
+│   │   ├── 08-JOIN-WORKERS.md
+│   │   ├── 09-VALIDATE-CLUSTER.md
+│   │   ├── 10-ADMIN-KUBECONFIG.md
+│   │   ├── 11-TROUBLESHOOTING.md
+│   │   ├── 12-RESET-AND-CLEANUP.md
+│   │   ├── ALL-COMMANDS.md
+│   │   └── README.md
+│   ├── 03-Amazon-EKS
+│   │   ├── terraform
+│   │   │   └── README.md
+│   │   ├── 01-PREREQUISITES.md
+│   │   ├── 02-CREATE-EKS-WITH-EKSCTL.md
+│   │   ├── 03-KUBECONFIG-AND-VALIDATION.md
+│   │   ├── 04-EKS-ACCESS-ENTRIES.md
+│   │   ├── 05-EKS-ADDONS.md
+│   │   ├── 06-POD-IDENTITY.md
+│   │   ├── 07-EBS-CSI.md
+│   │   ├── 08-METRICS-SERVER-AND-HPA.md
+│   │   ├── 09-AWS-LOAD-BALANCER-CONTROLLER.md
+│   │   ├── 10-OBSERVABILITY.md
+│   │   ├── 11-SCALING.md
+│   │   ├── 12-SECURITY.md
+│   │   ├── 13-UPGRADE.md
+│   │   ├── 14-CLEANUP.md
+│   │   ├── ALL-COMMANDS.md
+│   │   └── README.md
+│   └── README.md
+├── 03-Applications
+│   ├── App-01-Nginx-Training-Web
+│   │   ├── html
+│   │   │   └── index.html
+│   │   ├── kubernetes
+│   │   │   ├── 00-namespace.yaml
+│   │   │   ├── 01-deployment.yaml
+│   │   │   └── 02-service.yaml
+│   │   ├── Dockerfile
+│   │   ├── firstapp.md
+│   │   └── README.md
+│   ├── App-02-Python-Flask-API
+│   │   ├── kubernetes
+│   │   │   ├── 00-namespace.yaml
+│   │   │   ├── 01-configmap.yaml
+│   │   │   ├── 02-deployment.yaml
+│   │   │   ├── 03-service.yaml
+│   │   │   ├── 04-hpa.yaml
+│   │   │   └── 05-pdb.yaml
+│   │   ├── app.py
+│   │   ├── Dockerfile
+│   │   ├── README.md
+│   │   └── requirements.txt
+│   ├── App-03-Three-Tier-Store
+│   │   ├── backend
+│   │   │   ├── app.py
+│   │   │   ├── Dockerfile
+│   │   │   └── requirements.txt
+│   │   ├── frontend
+│   │   │   ├── Dockerfile
+│   │   │   ├── index.html
+│   │   │   └── nginx.conf
+│   │   ├── kubernetes
+│   │   │   ├── 00-namespace.yaml
+│   │   │   ├── 01-secret.yaml
+│   │   │   ├── 02-postgres-service.yaml
+│   │   │   ├── 03-postgres-statefulset.yaml
+│   │   │   ├── 04-backend.yaml
+│   │   │   ├── 05-backend-hpa-pdb.yaml
+│   │   │   ├── 06-frontend.yaml
+│   │   │   └── 07-networkpolicy.yaml
+│   │   └── README.md
+│   └── README.md
+├── 04-End-to-End-Projects
+│   ├── Project-01-Kubeadm-Cluster-and-App
+│   │   └── README.md
+│   └── Project-02-Amazon-EKS-Production-Style
+│       ├── ingress-example.yaml
+│       └── README.md
+├── 05-Cheat-Sheets
+│   ├── kubectl-command-index.md
+│   ├── troubleshooting-cheatsheet.md
+│   └── yaml-checklist.md
+├── 06-Interview-Preparation
+│   ├── 01-FUNDAMENTALS-QA.md
+│   └── 02-TROUBLESHOOTING-SCENARIOS.md
+├── scripts
+│   └── validate-cluster.sh
+├── KUBERNETES-COMPLETE-COMMAND-CATALOG.md
+├── KUBERNETES-PRINTABLE-MASTER-NOTES.md
+├── MANIFEST.json
+├── README.md
+├── REPOSITORY-TREE.txt
+├── VALIDATION-REPORT.txt
+└── WHAT-CHANGED-v2.md

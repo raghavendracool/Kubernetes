@@ -1,4 +1,4 @@
-# Module 03 — kubectl, Contexts and Cluster Inspection
+# Module 03 â€” kubectl, Contexts and Cluster Inspection
 
 ## 1. Module Goal
 
@@ -70,7 +70,7 @@ The exact components involved differ by topic, but this flow is the basis for un
 
 Read `COMMANDS.md` in this module for the extended command sheet and explanations.
 
-## 7. Command Workflow — Do Not Skip Verification
+## 7. Command Workflow â€” Do Not Skip Verification
 
 Use this workflow during demos:
 
@@ -114,6 +114,20 @@ Then ask:
 3. Which ports, volumes, identities or policies are being referenced?
 4. What command proves it is working?
 
+## 8A. YAML Components for This Module
+
+For kubectl inspection workflows, students should focus on:
+
+- `metadata.labels` and `metadata.annotations` for filtering and ownership.
+- `spec` fields queried with JSONPath/custom-columns.
+- `status` fields used during troubleshooting (`phase`, `podIP`, `conditions`).
+- Namespaced identity (`namespace + kind + name`) while running inspection commands.
+
+Use examples in `examples/`:
+
+- `01-pod-for-inspection.yaml`
+- `02-deployment-jsonpath.yaml`
+
 ## 9. Common Problems
 
 | Symptom | What to check first |
@@ -147,6 +161,13 @@ Be able to answer these without reading notes:
 3. Which command would you run first when it fails?
 4. What is the most common misconfiguration?
 5. How would your approach differ in Amazon EKS versus self-managed Kubernetes?
+
+## 13A. See Also
+
+- Course roadmap: `../../00-Course-Guide/01-COURSE-ROADMAP.md`
+- YAML checklist: `../../05-Cheat-Sheets/yaml-checklist.md`
+- Applications practice: `../../03-Applications/README.md`
+- Continue with the next module folder in sequence.
 
 ## 14. Module Completion Checklist
 

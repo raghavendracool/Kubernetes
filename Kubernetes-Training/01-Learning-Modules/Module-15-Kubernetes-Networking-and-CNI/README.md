@@ -1,4 +1,4 @@
-# Module 15 — Kubernetes Networking and CNI
+# Module 15 â€” Kubernetes Networking and CNI
 
 ## 1. Module Goal
 
@@ -70,7 +70,7 @@ The exact components involved differ by topic, but this flow is the basis for un
 
 Read `COMMANDS.md` in this module for the extended command sheet and explanations.
 
-## 7. Command Workflow — Do Not Skip Verification
+## 7. Command Workflow â€” Do Not Skip Verification
 
 Use this workflow during demos:
 
@@ -114,6 +114,20 @@ Then ask:
 3. Which ports, volumes, identities or policies are being referenced?
 4. What command proves it is working?
 
+## 8A. YAML Components for This Module
+
+For networking and CNI-focused manifests, students should identify:
+
+- `spec.hostNetwork` and its node-network impact.
+- `metadata.labels` + Service selectors for traffic targeting.
+- Pod/service namespace boundaries affecting DNS resolution.
+- Debug container image/command used for network checks.
+
+Use examples in `examples/`:
+
+- `01-netshoot-pod.yaml`
+- `02-daemonset-node-network-check.yaml`
+
 ## 9. Common Problems
 
 | Symptom | What to check first |
@@ -147,6 +161,13 @@ Be able to answer these without reading notes:
 3. Which command would you run first when it fails?
 4. What is the most common misconfiguration?
 5. How would your approach differ in Amazon EKS versus self-managed Kubernetes?
+
+## 13A. See Also
+
+- Course roadmap: `../../00-Course-Guide/01-COURSE-ROADMAP.md`
+- YAML checklist: `../../05-Cheat-Sheets/yaml-checklist.md`
+- Applications practice: `../../03-Applications/README.md`
+- Continue with the next module folder in sequence.
 
 ## 14. Module Completion Checklist
 
