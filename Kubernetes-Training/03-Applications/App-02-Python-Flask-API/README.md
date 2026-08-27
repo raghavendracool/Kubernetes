@@ -84,6 +84,61 @@ scp k8s-flask-api-v1.tar ubuntu@k8s-worker-01:/tmp/
 scp k8s-flask-api-v1.tar ubuntu@k8s-worker-02:/tmp/
 ```
 
+If hostname resolution is not configured, use worker private IPs instead of hostnames.
+
+```bash
+scp k8s-flask-api-v1.tar ubuntu@172.31.45.109:/tmp/
+scp k8s-flask-api-v1.tar ubuntu@172.31.37.3:/tmp/
+```
+
+If `Permission denied (publickey)` appears, copy your PEM key to control-plane and use it explicitly for SSH/SCP.
+
+From your laptop:
+
+```bash
+scp -i "C:/Users/<USER>/Downloads/k8.pem" "C:/Users/<USER>/Downloads/k8.pem" ubuntu@<CONTROL_PLANE_PUBLIC_IP>:/home/ubuntu/.ssh/k8.pem
+```
+
+If the PEM is already present on control-plane (for example `/home/ubuntu/k8.pem`), you can skip the laptop copy command above.
+
+On control-plane:
+
+```bash
+chmod 700 /home/ubuntu/.ssh
+chmod 400 /home/ubuntu/.ssh/k8.pem
+
+scp -i /home/ubuntu/.ssh/k8.pem k8s-flask-api-v1.tar ubuntu@172.31.45.109:/tmp/
+scp -i /home/ubuntu/.ssh/k8.pem k8s-flask-api-v1.tar ubuntu@172.31.37.3:/tmp/
+```
+
+Alternative if your PEM is in home directory:
+
+```bash
+chmod 400 /home/ubuntu/k8.pem
+scp -i /home/ubuntu/k8.pem k8s-flask-api-v1.tar ubuntu@172.31.45.109:/tmp/
+scp -i /home/ubuntu/k8.pem k8s-flask-api-v1.tar ubuntu@172.31.37.3:/tmp/
+```
+
+Optional verification:
+
+```bash
+ssh -i /home/ubuntu/.ssh/k8.pem ubuntu@172.31.45.109 "ls -lh /tmp/k8s-flask-api-v1.tar"
+ssh -i /home/ubuntu/.ssh/k8.pem ubuntu@172.31.37.3 "ls -lh /tmp/k8s-flask-api-v1.tar"
+```
+
+Alternative if your PEM is in home directory:
+
+```bash
+ssh -i /home/ubuntu/k8.pem ubuntu@172.31.45.109 "ls -lh /tmp/k8s-flask-api-v1.tar"
+ssh -i /home/ubuntu/k8.pem ubuntu@172.31.37.3 "ls -lh /tmp/k8s-flask-api-v1.tar"
+```
+
+Security note: remove the PEM from control-plane after class/demo.
+
+```bash
+rm -f /home/ubuntu/.ssh/k8.pem
+```
+
 3. Import image into containerd on every node (control-plane and workers).
 
 ```bash

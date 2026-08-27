@@ -19,7 +19,8 @@ spec:
           type: RuntimeDefault
       containers:
         - name: api
-          image: <REGISTRY_USER>/k8s-flask-api:v1
+          image: k8s-flask-api:v1
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 5000
           envFrom:
