@@ -12,11 +12,32 @@ This is a small API used for Deployments, Services, ConfigMaps, probes, resource
 
 ```bash
 cd 03-Applications/App-02-Python-Flask-API
+
+# Ubuntu/Debian prerequisites (run once)
+sudo apt update
+sudo apt install -y python3-venv python3-pip python-is-python3
+
+# Create and activate virtual environment
+rm -rf .venv
 python3 -m venv .venv
 source .venv/bin/activate
+
+# Install dependencies
+python -m pip install --upgrade pip
 pip install -r requirements.txt
+
+# Run and test
 APP_ENV=local python app.py
 curl http://localhost:5000/health
+```
+
+If virtual environment creation fails with an `ensurepip` error, install a versioned venv package for your Python version and recreate `.venv`:
+
+```bash
+python3 --version
+sudo apt install -y python3.12-venv
+rm -rf .venv
+python3 -m venv .venv
 ```
 
 ## Docker
