@@ -1,48 +1,34 @@
-# App 02 — Python Flask API
+# App 02 - Python Flask API
 
-This is a small API used for Deployments, Services, ConfigMaps, probes, resources, HPA and rollout demonstrations.
+This app is now configured for a full EC2 kubeadm demo without external registry.
 
-## Endpoints
+## Two Demo Paths For Students
 
-- `/` — application information
-- `/health` — liveness/readiness endpoint
-- `/api/info` — Pod/environment information
+Use both paths in class so students understand the difference between container runtime and Kubernetes orchestration.
 
-## Local Run
+- Path A: Run app as a standalone Docker container.
+- Path B: Run the same app as Kubernetes Pods behind a Service.
 
-```bash
-cd 03-Applications/App-02-Python-Flask-API
+## Current Behavior
 
-# Ubuntu/Debian prerequisites (run once)
-sudo apt update
-sudo apt install -y python3-venv python3-pip python-is-python3
+- / serves a styled DevOps Training Portal HTML page
+- /health returns liveness and readiness response
+- /api/info returns hostname, environment, and version
 
-# Create and activate virtual environment
-rm -rf .venv
-python3 -m venv .venv
-source .venv/bin/activate
+## Manifest State (Already Aligned)
 
-# Install dependencies
-python -m pip install --upgrade pip
-pip install -r requirements.txt
+- Deployment image: k8s-flask-api:v1
+- imagePullPolicy: IfNotPresent
+- Pod securityContext includes runAsNonRoot + UID/GID 10001
+- Service type: NodePort
+- Service port mapping: 80 -> 5000
+- NodePort: 30080
 
-# Run and test
-APP_ENV=local python app.py
-curl http://localhost:5000/health
-```
+## Path A - Docker Container Demo (No Kubernetes)
 
-If virtual environment creation fails with an `ensurepip` error, install a versioned venv package for your Python version and recreate `.venv`:
+Run on control-plane node.
 
-```bash
-python3 --version
-sudo apt install -y python3.12-venv
-rm -rf .venv
-python3 -m venv .venv
-```
-
-## Docker Install (Ubuntu)
-
-Use this once on the node where you want to build images.
+### A1) Install Docker (once)
 
 ```bash
 sudo apt update
@@ -53,132 +39,163 @@ newgrp docker
 docker version
 ```
 
-If `newgrp docker` does not refresh group membership in your shell, log out and log back in, then run `docker version` again.
-
-## Docker
+### A2) Build and run container
 
 ```bash
-docker build -t <REGISTRY_USER>/k8s-flask-api:v1 .
-docker run --rm -p 5000:5000 -e APP_ENV=docker <REGISTRY_USER>/k8s-flask-api:v1
-curl http://localhost:5000/api/info
+cd ~/Kubernetes/Kubernetes-Training/03-Applications/App-02-Python-Flask-API
+
+docker build -t k8s-flask-api:v1 .
+docker run --rm -p 5000:5000 -e APP_ENV=docker -e APP_VERSION=v1 k8s-flask-api:v1
 ```
 
-Push the image and replace `<REGISTRY_USER>` in the Deployment manifest.
-
-## No Registry (EC2 Only)
-
-Use this path when you do not want Docker Hub or any external registry.
-
-1. Build image on control-plane node.
+Keep this terminal running, then from another terminal on same EC2:
 
 ```bash
-cd 03-Applications/App-02-Python-Flask-API
+curl http://127.0.0.1:5000/health
+curl http://127.0.0.1:5000/api/info
+```
+
+Optional browser test from laptop:
+
+- Add EC2 Security Group inbound TCP 5000.
+- Open http://<CONTROL_PLANE_PUBLIC_IP>:5000/
+
+Stop demo container with Ctrl+C.
+
+## Path B - Kubernetes Pods Demo (EC2 Only, No Registry)
+
+Run all commands from control-plane node unless noted.
+
+### B1) Local Prerequisites
+
+```bash
+cd ~/Kubernetes/Kubernetes-Training/03-Applications/App-02-Python-Flask-API
+
+sudo apt update
+sudo apt install -y python3-venv python3-pip python-is-python3 docker.io
+sudo systemctl enable --now docker
+sudo usermod -aG docker $USER
+newgrp docker
+docker version
+```
+
+### B2) Build App Image and Export Tar
+
+```bash
+cd ~/Kubernetes/Kubernetes-Training/03-Applications/App-02-Python-Flask-API
+
 docker build -t k8s-flask-api:v1 .
 docker save k8s-flask-api:v1 -o k8s-flask-api-v1.tar
 ```
 
-2. Copy image tar to worker nodes.
+### B3) Copy Image Tar to Workers Using k8s.pem
+
+If key is already on control-plane:
 
 ```bash
-scp k8s-flask-api-v1.tar ubuntu@k8s-worker-01:/tmp/
-scp k8s-flask-api-v1.tar ubuntu@k8s-worker-02:/tmp/
+chmod 400 /home/ubuntu/k8s.pem
+
+scp -i /home/ubuntu/k8s.pem k8s-flask-api-v1.tar ubuntu@172.31.45.109:/tmp/
+scp -i /home/ubuntu/k8s.pem k8s-flask-api-v1.tar ubuntu@172.31.37.3:/tmp/
 ```
 
-If hostname resolution is not configured, use worker private IPs instead of hostnames.
+If key is only on laptop, copy it once to control-plane:
 
 ```bash
-scp k8s-flask-api-v1.tar ubuntu@172.31.45.109:/tmp/
-scp k8s-flask-api-v1.tar ubuntu@172.31.37.3:/tmp/
+scp -i "C:/Users/<USER>/Downloads/k8s.pem" "C:/Users/<USER>/Downloads/k8s.pem" ubuntu@<CONTROL_PLANE_PUBLIC_IP>:/home/ubuntu/k8s.pem
+chmod 400 /home/ubuntu/k8s.pem
 ```
 
-If `Permission denied (publickey)` appears, copy your PEM key to control-plane and use it explicitly for SSH/SCP.
+### B4) Import Image Into containerd on All Nodes
 
-From your laptop:
+Workers:
 
 ```bash
-scp -i "C:/Users/<USER>/Downloads/k8.pem" "C:/Users/<USER>/Downloads/k8.pem" ubuntu@<CONTROL_PLANE_PUBLIC_IP>:/home/ubuntu/.ssh/k8.pem
+ssh -i /home/ubuntu/k8s.pem ubuntu@172.31.45.109 "sudo ctr -n k8s.io images import /tmp/k8s-flask-api-v1.tar"
+ssh -i /home/ubuntu/k8s.pem ubuntu@172.31.37.3 "sudo ctr -n k8s.io images import /tmp/k8s-flask-api-v1.tar"
 ```
 
-If the PEM is already present on control-plane (for example `/home/ubuntu/k8.pem`), you can skip the laptop copy command above.
-
-On control-plane:
-
-```bash
-chmod 700 /home/ubuntu/.ssh
-chmod 400 /home/ubuntu/.ssh/k8.pem
-
-scp -i /home/ubuntu/.ssh/k8.pem k8s-flask-api-v1.tar ubuntu@172.31.45.109:/tmp/
-scp -i /home/ubuntu/.ssh/k8.pem k8s-flask-api-v1.tar ubuntu@172.31.37.3:/tmp/
-```
-
-Alternative if your PEM is in home directory:
-
-```bash
-chmod 400 /home/ubuntu/k8.pem
-scp -i /home/ubuntu/k8.pem k8s-flask-api-v1.tar ubuntu@172.31.45.109:/tmp/
-scp -i /home/ubuntu/k8.pem k8s-flask-api-v1.tar ubuntu@172.31.37.3:/tmp/
-```
-
-Optional verification:
-
-```bash
-ssh -i /home/ubuntu/.ssh/k8.pem ubuntu@172.31.45.109 "ls -lh /tmp/k8s-flask-api-v1.tar"
-ssh -i /home/ubuntu/.ssh/k8.pem ubuntu@172.31.37.3 "ls -lh /tmp/k8s-flask-api-v1.tar"
-```
-
-Alternative if your PEM is in home directory:
-
-```bash
-ssh -i /home/ubuntu/k8.pem ubuntu@172.31.45.109 "ls -lh /tmp/k8s-flask-api-v1.tar"
-ssh -i /home/ubuntu/k8.pem ubuntu@172.31.37.3 "ls -lh /tmp/k8s-flask-api-v1.tar"
-```
-
-Security note: remove the PEM from control-plane after class/demo.
-
-```bash
-rm -f /home/ubuntu/.ssh/k8.pem
-```
-
-3. Import image into containerd on every node (control-plane and workers).
+Control-plane:
 
 ```bash
 sudo ctr -n k8s.io images import k8s-flask-api-v1.tar
 sudo ctr -n k8s.io images ls | grep k8s-flask-api
 ```
 
-Run the same import command on each worker using `/tmp/k8s-flask-api-v1.tar`.
-
-4. Update Deployment image and pull policy in `kubernetes/02-deployment.yaml`.
-
-- Set image to `k8s-flask-api:v1`
-- Add `imagePullPolicy: IfNotPresent` under the container
-
-5. Deploy and validate.
+### B5) Deploy Kubernetes Manifests
 
 ```bash
 kubectl apply -f kubernetes/
+kubectl rollout restart deployment/flask-api -n flask-api
+kubectl rollout status deployment/flask-api -n flask-api
+```
+
+### B6) Validate Workloads
+
+```bash
 kubectl get pods -n flask-api -o wide
 kubectl get svc -n flask-api
 kubectl get hpa -n flask-api
+kubectl get pdb -n flask-api
 ```
 
-## Kubernetes Deploy
+### B7) Open App in Browser (Proper App Access)
+
+Open from laptop browser:
+
+- http://<CONTROL_PLANE_PUBLIC_IP>:30080/
+- http://<CONTROL_PLANE_PUBLIC_IP>:30080/health
+- http://<CONTROL_PLANE_PUBLIC_IP>:30080/api/info
+
+Security Group requirement:
+
+- Allow inbound TCP 30080 on control-plane EC2 instance
+
+### B8) Optional Port-Forward Check
 
 ```bash
-kubectl apply -f kubernetes/
-kubectl get all -n flask-api
-kubectl get hpa -n flask-api
 kubectl port-forward -n flask-api svc/flask-api 5000:80
-curl http://localhost:5000/api/info
 ```
 
-If you run `port-forward` on EC2, test from the same EC2 shell. From your laptop, use EC2 public IP and service/node access methods instead of `127.0.0.1`.
-
-## Rollout Demo
+Then from second control-plane shell:
 
 ```bash
-kubectl set image deployment/flask-api api=<REGISTRY_USER>/k8s-flask-api:v2 -n flask-api
+curl http://127.0.0.1:5000/health
+curl http://127.0.0.1:5000/api/info
+```
+
+## Rollout Demo Without Registry
+
+### Build v2 image locally
+
+```bash
+docker build -t k8s-flask-api:v2 .
+docker save k8s-flask-api:v2 -o k8s-flask-api-v2.tar
+```
+
+### Copy and import v2 on all nodes
+
+```bash
+scp -i /home/ubuntu/k8s.pem k8s-flask-api-v2.tar ubuntu@172.31.45.109:/tmp/
+scp -i /home/ubuntu/k8s.pem k8s-flask-api-v2.tar ubuntu@172.31.37.3:/tmp/
+
+ssh -i /home/ubuntu/k8s.pem ubuntu@172.31.45.109 "sudo ctr -n k8s.io images import /tmp/k8s-flask-api-v2.tar"
+ssh -i /home/ubuntu/k8s.pem ubuntu@172.31.37.3 "sudo ctr -n k8s.io images import /tmp/k8s-flask-api-v2.tar"
+sudo ctr -n k8s.io images import k8s-flask-api-v2.tar
+```
+
+### Update deployment and verify rollout
+
+```bash
+kubectl set image deployment/flask-api api=k8s-flask-api:v2 -n flask-api
 kubectl rollout status deployment/flask-api -n flask-api
 kubectl rollout history deployment/flask-api -n flask-api
 kubectl rollout undo deployment/flask-api -n flask-api
 ```
+
+## Troubleshooting
+
+- If pods show CreateContainerConfigError, verify deployment securityContext has UID/GID 10001.
+- If pods show ImagePullBackOff, import image tar on the node where pod is scheduled.
+- If browser cannot open NodePort, verify EC2 Security Group inbound TCP 30080.
+- If SCP fails with Permission denied (publickey), check key path and chmod 400 on k8s.pem.
