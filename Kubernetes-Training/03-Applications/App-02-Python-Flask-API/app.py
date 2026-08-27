@@ -1,11 +1,11 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template
 import os, socket
 
 app = Flask(__name__)
 
 @app.get('/')
 def index():
-    return jsonify(message='Kubernetes Flask API', environment=os.getenv('APP_ENV','unknown'))
+    return render_template('index.html')
 
 @app.get('/health')
 def health():
