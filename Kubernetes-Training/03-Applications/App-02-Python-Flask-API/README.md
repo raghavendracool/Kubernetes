@@ -40,6 +40,21 @@ rm -rf .venv
 python3 -m venv .venv
 ```
 
+## Docker Install (Ubuntu)
+
+Use this once on the node where you want to build images.
+
+```bash
+sudo apt update
+sudo apt install -y docker.io
+sudo systemctl enable --now docker
+sudo usermod -aG docker $USER
+newgrp docker
+docker version
+```
+
+If `newgrp docker` does not refresh group membership in your shell, log out and log back in, then run `docker version` again.
+
 ## Docker
 
 ```bash
@@ -50,6 +65,48 @@ curl http://localhost:5000/api/info
 
 Push the image and replace `<REGISTRY_USER>` in the Deployment manifest.
 
+## No Registry (EC2 Only)
+
+Use this path when you do not want Docker Hub or any external registry.
+
+1. Build image on control-plane node.
+
+```bash
+cd 03-Applications/App-02-Python-Flask-API
+docker build -t k8s-flask-api:v1 .
+docker save k8s-flask-api:v1 -o k8s-flask-api-v1.tar
+```
+
+2. Copy image tar to worker nodes.
+
+```bash
+scp k8s-flask-api-v1.tar ubuntu@k8s-worker-01:/tmp/
+scp k8s-flask-api-v1.tar ubuntu@k8s-worker-02:/tmp/
+```
+
+3. Import image into containerd on every node (control-plane and workers).
+
+```bash
+sudo ctr -n k8s.io images import k8s-flask-api-v1.tar
+sudo ctr -n k8s.io images ls | grep k8s-flask-api
+```
+
+Run the same import command on each worker using `/tmp/k8s-flask-api-v1.tar`.
+
+4. Update Deployment image and pull policy in `kubernetes/02-deployment.yaml`.
+
+- Set image to `k8s-flask-api:v1`
+- Add `imagePullPolicy: IfNotPresent` under the container
+
+5. Deploy and validate.
+
+```bash
+kubectl apply -f kubernetes/
+kubectl get pods -n flask-api -o wide
+kubectl get svc -n flask-api
+kubectl get hpa -n flask-api
+```
+
 ## Kubernetes Deploy
 
 ```bash
@@ -59,6 +116,8 @@ kubectl get hpa -n flask-api
 kubectl port-forward -n flask-api svc/flask-api 5000:80
 curl http://localhost:5000/api/info
 ```
+
+If you run `port-forward` on EC2, test from the same EC2 shell. From your laptop, use EC2 public IP and service/node access methods instead of `127.0.0.1`.
 
 ## Rollout Demo
 
