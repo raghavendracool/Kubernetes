@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: game-2048
+  namespace: eks-demo
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: game-2048
+  template:
+    metadata:
+      labels:
+        app: game-2048
+    spec:
+      containers:
+        - name: game-2048
+          image: public.ecr.aws/l6m2t8p7/docker-2048:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              cpu: 150m
+              memory: 128Mi
+            limits:
+              cpu: 600m
+              memory: 256Mi
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 15
+            periodSeconds: 20
