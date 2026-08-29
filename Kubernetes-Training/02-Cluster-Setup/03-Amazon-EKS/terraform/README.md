@@ -6,8 +6,8 @@ Use this runbook exactly in order during training.
 
 This lab creates:
 
-- EKS cluster in the default VPC of your AWS region
-- New private subnets derived from default VPC CIDR
+- Dedicated training VPC in your AWS region
+- New public and private subnets in that dedicated VPC
 - One NAT Gateway for private subnet egress
 - Managed node group in private subnets
 - IAM roles and policies for cluster and nodes
@@ -35,21 +35,19 @@ Configure AWS credentials if not done:
 aws configure
 ```
 
-## 3. Verify AWS Account and Default VPC
+## 3. Verify AWS Account and Region
 
 Run:
 
 ```bash
 aws sts get-caller-identity
 aws configure get region
-aws ec2 describe-vpcs --filters Name=isDefault,Values=true --query "Vpcs[].{VpcId:VpcId,CidrBlock:CidrBlock,State:State}" --output table
 ```
 
 Expected:
 
 - Account and IAM identity should be correct
 - Region should be the one you want for class
-- Default VPC should exist and be available
 
 ## 4. Move to Terraform Folder
 
@@ -72,6 +70,7 @@ Defaults used in this repo:
 - aws_region = us-east-1
 - cluster_name = k8s-training-eks-tf
 - kubernetes_version = 1.36
+- vpc_cidr = 10.42.0.0/16
 - node instance = t3.medium
 
 ## 6. Terraform Init and Validate
@@ -153,7 +152,7 @@ kubectl get svc -n eks-demo
 Wait for external endpoint:
 
 ```bash
-kubectl get svc podinfo -n eks-demo -w
+kubectl get svc game-2048 -n eks-demo -w
 ```
 
 Open the external hostname from EXTERNAL-IP column in browser.
@@ -169,10 +168,10 @@ kubectl get pods -n eks-demo -o wide -w
 Rollout demo:
 
 ```bash
-kubectl set image deployment/podinfo podinfo=ghcr.io/stefanprodan/podinfo:6.6.3 -n eks-demo
-kubectl rollout status deployment/podinfo -n eks-demo
-kubectl rollout history deployment/podinfo -n eks-demo
-kubectl rollout undo deployment/podinfo -n eks-demo
+kubectl set image deployment/game-2048 game-2048=public.ecr.aws/l6m2t8p7/docker-2048:latest -n eks-demo
+kubectl rollout status deployment/game-2048 -n eks-demo
+kubectl rollout history deployment/game-2048 -n eks-demo
+kubectl rollout undo deployment/game-2048 -n eks-demo
 ```
 
 ## 12. Key Pair Requirement

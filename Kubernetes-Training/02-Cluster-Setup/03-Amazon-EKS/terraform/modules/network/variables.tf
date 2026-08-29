@@ -3,19 +3,19 @@ variable "cluster_name" {
   description = "EKS cluster name used for subnet tagging"
 }
 
-variable "default_vpc_id" {
+variable "vpc_cidr" {
   type        = string
-  description = "Default VPC id"
+  description = "CIDR for dedicated VPC"
 }
 
-variable "public_subnet_ids" {
+variable "subnet_azs" {
   type        = list(string)
-  description = "Public subnet ids used to place NAT gateway"
+  description = "Availability zones for subnet creation"
 }
 
-variable "private_subnet_azs" {
+variable "public_subnet_cidrs" {
   type        = list(string)
-  description = "Availability zones where private subnets are created"
+  description = "CIDR blocks for public subnets"
 }
 
 variable "private_subnet_cidrs" {

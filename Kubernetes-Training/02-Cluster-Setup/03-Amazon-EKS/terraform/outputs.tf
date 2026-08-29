@@ -1,11 +1,11 @@
-output "default_vpc_id" {
-  value       = data.aws_vpc.default.id
-  description = "Default VPC ID used for this deployment"
+output "vpc_id" {
+  value       = module.network.vpc_id
+  description = "Dedicated VPC ID used for this deployment"
 }
 
 output "private_subnet_ids" {
   value       = module.network.private_subnet_ids
-  description = "Private subnet IDs created in the default VPC"
+  description = "Private subnet IDs created in the dedicated VPC"
 }
 
 output "cluster_name" {

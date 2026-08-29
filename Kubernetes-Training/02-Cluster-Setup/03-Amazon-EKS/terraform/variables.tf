@@ -10,6 +10,18 @@ variable "cluster_name" {
   default     = "k8s-training-eks-tf"
 }
 
+variable "vpc_cidr" {
+  description = "CIDR for dedicated training VPC"
+  type        = string
+  default     = "10.42.0.0/16"
+}
+
+variable "public_subnet_newbits" {
+  description = "Additional bits for public subnet CIDRs derived from vpc_cidr"
+  type        = number
+  default     = 8
+}
+
 variable "kubernetes_version" {
   description = "Kubernetes version for EKS"
   type        = string
@@ -17,27 +29,27 @@ variable "kubernetes_version" {
 }
 
 variable "private_subnet_count" {
-  description = "Number of private subnets to create in default VPC"
+  description = "Number of private subnets to create in dedicated training VPC"
   type        = number
   default     = 2
 }
 
 variable "private_subnet_newbits" {
-  description = "Additional subnet bits for cidrsubnet() from default VPC CIDR"
+  description = "Additional subnet bits for cidrsubnet() from dedicated VPC CIDR"
   type        = number
-  default     = 4
+  default     = 8
 }
 
 variable "private_subnet_netnum_offset" {
-  description = "Offset used to generate private subnet CIDRs from default VPC CIDR"
+  description = "Offset used to generate private subnet CIDRs from dedicated VPC CIDR"
   type        = number
-  default     = 8
+  default     = 100
 }
 
 variable "node_instance_types" {
   description = "EKS managed node group instance types"
   type        = list(string)
-  default     = ["c7i-flex.large"]
+  default     = ["t3.medium"]
 }
 
 variable "node_desired_size" {
